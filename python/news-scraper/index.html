@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Latest News</h1>
+    <div id="main" class="container">
+        <div id="container_row" class="row">
+            
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://127.0.0.1:5000/headlines', true);
+        request.onload = function () {
+          var data = JSON.parse(this.response);
+          if (request.status >= 200 && request.status < 400) {
+            data.forEach(news => {
+                const cardDiv = document.createElement('div');
+                cardDiv.setAttribute('class','col-md-2');
+
+                const card = document.createElement('div');
+                card.setAttribute('class', 'card mb-4 shadow-sm');
+                
+                const cardBody = document.createElement('div');
+                cardBody.setAttribute('class', 'card-body');
+
+                const h5 = document.createElement('h5');
+                h5.setAttribute('class', 'card-title');
+                h5.textContent = news.source;
+
+                const p = document.createElement('p');
+                p.setAttribute('class','card-text');
+                p.textContent = news.title;
+
+                const img = document.createElement('img');
+                img.setAttribute('class','card-img-top');
+                img.src = news.image
+
+                const container = document.getElementById('container_row')
+                card.appendChild(cardBody);
+                card.appendChild(p);
+                cardDiv.appendChild(img);
+                cardDiv.appendChild(card);
+                container.appendChild(cardDiv);
+            //card.appendChild(p);
+          });
+          }
+        }
+        request.send();
+    </script>
+  </body>
+</html>
